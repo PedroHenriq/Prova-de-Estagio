@@ -1,4 +1,4 @@
-# Prova de Estagio
+# Prova de Estágio
 ##### SEIT/COTIN/INTERLEGIS - Brasília, DF - Abril 2016.
 
 GitHub é um Serviço de Web Hosting Compartilhado para projetos que usam o controle de versionamento Git. É uma ótima ferramenta de desenvolvimento e de compartilhamento de código. 
