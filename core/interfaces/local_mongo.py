@@ -21,20 +21,23 @@ class LocalMongo():
 
 # LocalMongo().get()
 # LocalMongo().send(
-# 	{
-# 		'Filter': {
-# 			'service_names': [],
-# 			'service_ids': [],
-# 			'time': []
+# 	data=[{
+# 		"Filter": {
+# 			"service_names": [],
+# 			"service_ids": [],
+# 			"time": []
 # 		},
-# 		'Event':{
-# 			'type': 'Quantity',
-# 			'value': 100
+# 		"Event":{
+# 			"type": "Quantity",
+# 			"value": 100,
+# 			"occurrences": 2,
+# 			"last_occurence": "000000000000000000000000"
 # 		},
-# 		'Formula': None,
-# 		'Recipient':{
-# 			'Type': 'UIoTService',
-# 			'parms':{'service_name': 'MVP_SERVICE'}
+# 		"Formula": None,
+# 		"Recipient":{
+# 			"Type": "UIoTService",
+# 			"params":{"service_name": "MVP_SERVICE"}
 # 		}
-# 	}
+# 	}],
+# 	collection="formula"
 # )

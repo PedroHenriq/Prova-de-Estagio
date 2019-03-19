@@ -8,6 +8,7 @@ class UIoTService():
 
 	def send(self, data):
 		print("FINALIZOUUUU")
+		print(len(data))
 		return True
 
 	def get(self):

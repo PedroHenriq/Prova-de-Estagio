@@ -11,6 +11,8 @@ from pymongo import MongoClient
 
 from dispatcher import Dispatcher
 
+from bson import ObjectId
+
 # from termcolor import colored
 
 
@@ -60,11 +62,21 @@ class Monitor():
         service_names = formula['Filter']['service_names']
         service_ids = formula['Filter']['service_ids']
         time = formula['Filter']['time']
-        mongo_filter = self.mount_mongo_filter(service_names, service_ids, time)
+        last_occurence = formula['Event']['last_occurence']
+        mongo_filter = self.mount_mongo_filter(service_names, service_ids, time, last_occurence)
 
         dataset = self.__get_dataset(mongo_filter)
         print("length of dataset: " + str(len(dataset)))
         if(self.__event_types[formula['Event']['type']](dataset, formula['Event'])):
+            formula['Event']['last_occurence'] = str(dataset[len(dataset)-1]['_id'])
+            formula['Event']['occurrences'] = formula['Event']['occurrences'] - 1*(formula['Event']['occurrences']>0)
+            if formula['Event']['occurrences'] == 0:
+                self.db.formula.delete_one({"_id": formula['_id']})
+                pass
+            else:
+                self.db.formula.find_one_and_update({"_id": formula['_id']}, {'$set': formula})
+            print(formula)
+            
             if formula['Formula']:
                 pass
                 #TODO
@@ -72,7 +84,7 @@ class Monitor():
             else:
                 print(formula['Recipient'])
                 interface_type = formula['Recipient']['Type']
-                params = formula['Recipient']['parms']
+                params = formula['Recipient']['params']
                 params['dataset'] = dataset
                 return Dispatcher().send({
                     'interface_type': interface_type,
@@ -89,15 +101,16 @@ class Monitor():
     def __bool_event(self, dataset, event):
         pass
 
-    def mount_mongo_filter(self, service_names, service_ids, time):
+    def mount_mongo_filter(self, service_names, service_ids, time, last_occurence):
         #TODO
-        return {}
+        return {"_id":{"$gt":ObjectId(last_occurence)}}
 
 
 
     def run(self):
         while(True):
             formulas = self.__get_formulas()
+            print('length formulas:' + str(len(formulas)))
             results = self.__pool.map(self.__check_event, formulas)
             print(results)
 
