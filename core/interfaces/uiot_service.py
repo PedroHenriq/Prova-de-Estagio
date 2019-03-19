@@ -7,7 +7,7 @@ class UIoTService():
 		pass
 
 	def send(self, data):
-		print(data)
+		print("FINALIZOUUUU")
 		return True
 
 	def get(self):

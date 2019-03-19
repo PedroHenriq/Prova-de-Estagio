@@ -63,17 +63,18 @@ class Monitor():
         mongo_filter = self.mount_mongo_filter(service_names, service_ids, time)
 
         dataset = self.__get_dataset(mongo_filter)
-        print(dataset)
+        print("length of dataset: " + str(len(dataset)))
         if(self.__event_types[formula['Event']['type']](dataset, formula['Event'])):
             if formula['Formula']:
                 pass
                 #TODO
                 # self.get_known_formulas()[formula['Formula']].send(self.get_known_formulas()[formula['Formula']](dataset))
             else:
-                interface_type = formula['Recipent']['Type']
-                params = formula['Recipent']['params']
+                print(formula['Recipient'])
+                interface_type = formula['Recipient']['Type']
+                params = formula['Recipient']['parms']
                 params['dataset'] = dataset
-                Dispatcher().send({
+                return Dispatcher().send({
                     'interface_type': interface_type,
                     'params': params
                 })

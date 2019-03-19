@@ -35,6 +35,8 @@ class Dispatcher():
                                 print (name)
                                 if handler_class and inspect.isclass(handler_class):
                                         known_interfaces[member] = handler_class
+                print('known_interfaces')
+                print(known_interfaces)
                 return known_interfaces
         
 
