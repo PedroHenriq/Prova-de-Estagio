@@ -2,26 +2,24 @@ import os
 import glob
 import importlib
 import inspect
-from interfaces.uiot_service import UIoTService
 
 
 
 class Dispatcher():
 
         def __init__(self):
-                kf = self.get_known_formulas()
-                print(kf)
+                self.__interfaces = self.get_known_interfaces()
                 
 
         def send(self, data):
-                        interface = self.__interfaces[data['interface_type']]
-                        params = data['params']
-                        return interface().send(params)
+                interface = self.__interfaces[data['interface_type']]
+                params = data['params']
+                return interface().send(params)
 
 
 
-        def get_known_formulas(self):
-                known_formulas = {}
+        def get_known_interfaces(self):
+                known_interfaces = {}
                 current_dir = os.path.join(os.path.dirname(os.path.abspath('interfaces/*.py')))
                 current_module_name = os.path.splitext(os.path.basename(current_dir))[0]
                 print (current_module_name)
@@ -36,8 +34,8 @@ class Dispatcher():
                                 handler_class = getattr(module, member)
                                 print (name)
                                 if handler_class and inspect.isclass(handler_class):
-                                        known_formulas[member] = handler_class
-                return known_formulas
+                                        known_interfaces[member] = handler_class
+                return known_interfaces
         
 
 Dispatcher()
