@@ -4,7 +4,7 @@ import json
 
 MAC = ""
 CHIPSET = ""
-N_REQUESTS = 97
+N_REQUESTS = 99
 URL = 'http://localhost:8000/'
 
 def register_client(mac="FF:FF:FF:FF:FF:FF", chipset="AMD 790FX"):
