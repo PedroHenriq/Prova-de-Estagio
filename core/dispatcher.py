@@ -39,5 +39,3 @@ class Dispatcher():
                 # print(known_interfaces)
                 return known_interfaces
         
-
-Dispatcher()

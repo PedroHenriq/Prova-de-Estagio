@@ -4,8 +4,9 @@ import json
 
 MAC = ""
 CHIPSET = ""
-N_REQUESTS = 99
-URL = 'http://localhost:8000/'
+N_REQUESTS = 10
+# URL = 'http://localhost:8000/'
+URL = 'http://192.168.43.6:8000/'
 
 def register_client(mac="FF:FF:FF:FF:FF:FF", chipset="AMD 790FX"):
     payload = {
@@ -65,6 +66,7 @@ else:
     
 
 for i in range (0, N_REQUESTS):
+    print("Sending Request Number " + str(i))
     if MAC and CHIPSET:
         register_data(mac=MAC, chipset=CHIPSET, data=i)
     else:

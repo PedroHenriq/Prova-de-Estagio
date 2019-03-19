@@ -70,12 +70,6 @@ class Monitor():
         if(self.__event_types[formula['Event']['type']](dataset, formula['Event'])):
             formula['Event']['last_occurence'] = str(dataset[len(dataset)-1]['_id'])
             formula['Event']['occurrences'] = formula['Event']['occurrences'] - 1*(formula['Event']['occurrences']>0)
-            if formula['Event']['occurrences'] == 0:
-                self.db.formula.delete_one({"_id": formula['_id']})
-                pass
-            else:
-                self.db.formula.find_one_and_update({"_id": formula['_id']}, {'$set': formula})
-            print(formula)
             
             if formula['Formula']:
                 pass
@@ -90,6 +84,12 @@ class Monitor():
                     'interface_type': interface_type,
                     'params': params
                 })
+            if formula['Event']['occurrences'] == 0:
+                self.db.formula.delete_one({"_id": formula['_id']})
+                pass
+            else:
+                self.db.formula.find_one_and_update({"_id": formula['_id']}, {'$set': formula})
+            print(formula)
 
     def __quantity_event(self, dataset, event):
         return len(dataset) >= event['value']
