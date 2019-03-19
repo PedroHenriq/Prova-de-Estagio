@@ -1,5 +1,5 @@
-
-
+import requests
+import json
 
 class UIoTService():
 
@@ -7,8 +7,12 @@ class UIoTService():
 		pass
 
 	def send(self, data):
-		print("FINALIZOUUUU")
+		print("ENVIO PELA INTERFACE")
 		print(len(data))
+
+		response = requests.post('http://192.168.43.144:8000/data', data=json.dumps(data), headers={'Content-Type': "application/json"})
+		print("response: " + str(response.json()))
+
 		return True
 
 	def get(self):
