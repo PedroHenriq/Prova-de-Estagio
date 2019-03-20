@@ -6,12 +6,14 @@ class UIoTService():
 	def __init__(self):
 		pass
 
-	def send(self, data):
+	def send(self, parms):
 		print("ENVIO PELA INTERFACE")
-		print(len(data))
+		print(len(parms['dataset']))
 
-		response = requests.post('http://192.168.43.144:8000/data', data=json.dumps(data), headers={'Content-Type': "application/json"})
-		print("response: " + str(response.json()))
+		for item in parms['dataset']:
+			del item['_id']
+			response = requests.post('http://192.168.43.144:8000/data', data=json.dumps((item)), headers={'Content-Type': "application/json"})
+			print("response: " + str(response.json()))
 
 		return True
 
